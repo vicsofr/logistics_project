@@ -10,6 +10,7 @@ from .serializers import (
 class CargoCreateAPIView(generics.CreateAPIView):
     queryset = Cargo.objects.all()
     serializer_class = CargoCreateSerializer
+    http_method_names = ['post']
 
     def create(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data)
@@ -43,23 +44,27 @@ class CargoCreateAPIView(generics.CreateAPIView):
 class CargoListAPIView(generics.ListAPIView):
     queryset = Cargo.objects.all()
     serializer_class = CargoListSerializer
+    http_method_names = ['get']
 
 
 class CargoDetailAPIView(generics.RetrieveAPIView):
     queryset = Cargo.objects.all()
     serializer_class = CargoDetailSerializer
     lookup_field = 'pk'
+    http_method_names = ['get']
 
 
 class CargoUpdateAPIView(generics.UpdateAPIView):
     queryset = Cargo.objects.all()
     serializer_class = CargoUpdateSerializer
     lookup_field = 'pk'
+    http_method_names = ['put']
 
 
 class CargoDestroyAPIView(generics.DestroyAPIView):
     queryset = Cargo.objects.all()
     lookup_field = 'pk'
+    http_method_names = ['delete']
 
     def destroy(self, request, *args, **kwargs):
         cargo = self.get_object()
@@ -76,6 +81,7 @@ class TruckUpdateAPIView(generics.UpdateAPIView):
     queryset = Truck.objects.all()
     serializer_class = TruckSerializer
     lookup_field = 'pk'
+    http_method_names = ['put']
 
     def update(self, request, *args, **kwargs):
         truck = self.get_object()

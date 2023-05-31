@@ -1,4 +1,5 @@
 from django.urls import path
+
 from cargo_logistics.views import (
     CargoCreateAPIView, CargoListAPIView, CargoDetailAPIView, CargoUpdateAPIView, CargoDestroyAPIView,
     TruckUpdateAPIView
