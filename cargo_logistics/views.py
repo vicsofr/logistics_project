@@ -42,9 +42,20 @@ class CargoCreateAPIView(generics.CreateAPIView):
 
 
 class CargoListAPIView(generics.ListAPIView):
-    queryset = Cargo.objects.all()
     serializer_class = CargoListSerializer
     http_method_names = ['get']
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context['nearest_trucks_limit'] = self.request.query_params.get('nearest_trucks_limit')
+        return context
+
+    def get_queryset(self):
+        weight_limit = self.request.query_params.get('weight_limit')
+        queryset = Cargo.objects.all()
+        if weight_limit:
+            queryset = queryset.filter(weight__lt=weight_limit)
+        return queryset
 
 
 class CargoDetailAPIView(generics.RetrieveAPIView):

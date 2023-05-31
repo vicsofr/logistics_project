@@ -28,18 +28,24 @@ class CargoListSerializer(serializers.ModelSerializer):
         model = Cargo
         fields = ['id', 'pick_up_location', 'delivery_location', 'nearest_trucks']
 
-    @staticmethod
-    def get_nearest_trucks(cargo):
+    def get_nearest_trucks(self, cargo):
+        miles_limit = 450
         cargo_latitude = cargo.pick_up_location.latitude
         cargo_longitude = cargo.pick_up_location.longitude
         cargo_location = (cargo_latitude, cargo_longitude)
+
         trucks_queryset = Truck.objects.all()
         trucks_locations = {
             truck.pk: (truck.current_location.latitude, truck.current_location.longitude) for truck in trucks_queryset
         }
+
+        nearest_trucks_limit = self.context.get('nearest_trucks_limit')
+        if nearest_trucks_limit:
+            miles_limit = int(nearest_trucks_limit)
+
         nearest_trucks = [
             truck_id for truck_id, truck_location in trucks_locations.items() if
-            int(distance(cargo_location, truck_location).mi) < 450
+            int(distance(cargo_location, truck_location).mi) < miles_limit
         ]
         return nearest_trucks
 

@@ -49,7 +49,8 @@ docker-compose run app python manage.py createsuperuser
   "error": "error_description"
 }
 ```
-#### 2) Список грузов с количеством ближайших машин (< 450 миль): [*GET logistics/cargos*](http://0.0.0.0:8000/logistics/cargos/);
+#### 2) Список грузов с количеством ближайших машин (< 450 миль): [*GET logistics/cargos(?weight_limit=число&nearest_trucks_limit=число)*](http://0.0.0.0:8000/logistics/cargos/);
+- в скобках - возможная фильтрация списка по ограничениям веса (вес < число) и дальности до ближайших автомобилей (дальность < число)
 - *result*:
 ```json
 [
