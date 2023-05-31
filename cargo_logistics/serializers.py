@@ -14,7 +14,6 @@ class CargoCreateSerializer(serializers.Serializer):
     description = serializers.CharField()
 
 
-
 class CargoUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cargo
